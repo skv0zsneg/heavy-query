@@ -1,0 +1,27 @@
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  server:
+    build:
+      context: ./app
+    environment:
+      - PSQL_HOST=db
+      - PSQL_DB=postgres
+      - PSQL_USER=postgres
+      - PSQL_PASSWORD=postgres
+    ports:
+      - 50051:50051
+    depends_on:
+      - db
+
+volumes:
+  db:

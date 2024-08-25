@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+
+message SumAmountRequest {
+    int32 user_id = 1;
+    int64 datetime_from = 2;  // unixtime
+    int64 datetime_to = 3;  // unixtime
+}
+
+message SumAmountResponse {
+    float time_for_execution_ms = 1;
+    float total_sum = 2;
+}
+
+service Server {
+   rpc sum_amount(SumAmountRequest) returns (SumAmountResponse) {}
+}
